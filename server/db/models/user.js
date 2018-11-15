@@ -43,6 +43,18 @@ const User = db.define('user', {
       notEmpty: true,
     },
   },
+  password: {
+    type: Sequelize.STRING,
+    get() {
+      return () => this.getDataValue('password');
+    },
+  },
+  salt: {
+    type: Sequelize.STRING,
+    get() {
+      return () => this.getDataValue('salt');
+    },
+  },
 });
 
 module.exports = User;
