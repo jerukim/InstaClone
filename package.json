@@ -3,12 +3,20 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "start": "node node_modules/react-native/local-cli/cli.js start & node server",
+    "test": "jest",
+    "seed": "node script/seed/index.js",
+    "start-dev": "NODE_ENV='development' & npm run start-server",
+    "start-server": "nodemon server -e html,js,scss --ignore public --ignore client"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.4",
+    "morgan": "^1.9.1",
+    "pg": "^7.6.1",
     "react": "16.6.0-alpha.8af6728",
-    "react-native": "0.57.4"
+    "react-native": "0.57.4",
+    "sequelize": "^4.41.2"
   },
   "devDependencies": {
     "babel-jest": "23.6.0",
