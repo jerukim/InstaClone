@@ -3,37 +3,53 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const User = db.define('user', {
-  userName: {
+  name: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    validate: {
+      notEmpty: true,
+      characterLimit(value) {
+        if (value.length > 30) throw new Error(`above character limit of 30`);
+      },
+    },
+  },
+  username: {
+    // You can't start your username with a period
+    // You can't end your username with a period
+    // Ensure this value has at most 30 characters
     type: Sequelize.STRING,
     allowNull: false,
     unique: true,
     validate: {
+      notEmpty: true,
+      notContains: {
+        args: '..',
+        msg: "You can't have more than one period in a row",
+      },
+
+      characterLimit(value) {
+        if (value.length > 30) throw new Error(`above character limit of 30`);
+      },
+    },
+  },
+  website: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    validate: {
+      isUrl: true,
       notEmpty: true,
     },
   },
-  firstName: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    unique: true,
-    validate: {
-      notEmpty: true,
-    },
+  // max character coutn 150
+  bio: {
+    type: Sequelize.TEXT,
+    allowNull: true,
+    validate: {},
   },
-  lastName: {
+  // have default if none provided
+  profileImg: {
     type: Sequelize.STRING,
-    allowNull: false,
-    unique: true,
-    validate: {
-      notEmpty: true,
-    },
-  },
-  displayName: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    unique: true,
-    validate: {
-      notEmpty: true,
-    },
+    allowNull: true,
   },
   email: {
     type: Sequelize.STRING,
