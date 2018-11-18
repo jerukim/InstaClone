@@ -3,37 +3,59 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const User = db.define('user', {
-  userName: {
+  name: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    validate: {
+      notEmpty: true,
+      characterLimit(value) {
+        checkCharacterCount(value, 30);
+      },
+    },
+  },
+  username: {
     type: Sequelize.STRING,
     allowNull: false,
     unique: true,
     validate: {
+      notEmpty: true,
+      notContains: {
+        args: '..',
+        msg: "You can't have more than one period in a row",
+      },
+      noPeriodAtStartOrEnd(value) {
+        if (value.startsWith('.'))
+          throw new Error(`You can't start your username with a period`);
+
+        if (value.endsWith('.'))
+          throw new Error(`You can't end your username with a period`);
+      },
+      characterLimit(value) {
+        checkCharacterCount(value, 30);
+      },
+    },
+  },
+  website: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    validate: {
+      isUrl: true,
       notEmpty: true,
     },
   },
-  firstName: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    unique: true,
+  bio: {
+    type: Sequelize.TEXT,
+    allowNull: true,
     validate: {
-      notEmpty: true,
+      characterLimit(value) {
+        checkCharacterCount(value, 150);
+      },
     },
   },
-  lastName: {
+  profilePhoto: {
     type: Sequelize.STRING,
-    allowNull: false,
-    unique: true,
-    validate: {
-      notEmpty: true,
-    },
-  },
-  displayName: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    unique: true,
-    validate: {
-      notEmpty: true,
-    },
+    allowNull: true,
+    defaultValue: '/default-profile.png',
   },
   email: {
     type: Sequelize.STRING,
@@ -80,6 +102,11 @@ const setSaltAndPassword = user => {
     user.salt = User.generateSalt();
     user.password = User.encryptPassword(user.password(), user.salt());
   }
+};
+
+const checkCharacterCount = (str, num) => {
+  if (str.length > num)
+    throw new Error(`Ensure this value has at most ${num} characters`);
 };
 
 User.beforeCreate(setSaltAndPassword);

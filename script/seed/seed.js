@@ -1,12 +1,19 @@
 const userData = [
   {
-    userName: 'dude_man',
-    firstName: 'jeru',
-    lastName: 'kim',
+    name: 'jeru kim',
+    username: 'dude_man',
+    website: 'google.com',
+    bio: 'hello world',
     email: 'jeru@kim.com',
     password: 'password',
-    bio: 'hello world',
-    displayName: 'quick brown fox',
+  },
+  {
+    name: 'bob',
+    username: 'bob.builder',
+    website: 'bob.com',
+    bio: 'i build things',
+    email: 'bob@cat.com',
+    password: 'password',
   },
 ];
 
