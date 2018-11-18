@@ -9,8 +9,7 @@ const User = db.define('user', {
     validate: {
       notEmpty: true,
       characterLimit(value) {
-        if (value.length > 30)
-          throw new Error(`Ensure this value has at most 30 characters`);
+        checkCharacterCount(value, 30);
       },
     },
   },
@@ -32,8 +31,7 @@ const User = db.define('user', {
           throw new Error(`You can't end your username with a period`);
       },
       characterLimit(value) {
-        if (value.length > 30)
-          throw new Error(`Ensure this value has at most 30 characters`);
+        checkCharacterCount(value, 30);
       },
     },
   },
@@ -50,13 +48,11 @@ const User = db.define('user', {
     allowNull: true,
     validate: {
       characterLimit(value) {
-        if (value.length > 150)
-          throw new Error(`Ensure this value has at most 150 characters`);
+        checkCharacterCount(value, 150);
       },
     },
   },
-  // have default if none provided
-  profileImg: {
+  profilePhoto: {
     type: Sequelize.STRING,
     allowNull: true,
     defaultValue: '/default-profile.png',
@@ -106,6 +102,11 @@ const setSaltAndPassword = user => {
     user.salt = User.generateSalt();
     user.password = User.encryptPassword(user.password(), user.salt());
   }
+};
+
+const checkCharacterCount = (str, num) => {
+  if (str.length > num)
+    throw new Error(`Ensure this value has at most ${num} characters`);
 };
 
 User.beforeCreate(setSaltAndPassword);
