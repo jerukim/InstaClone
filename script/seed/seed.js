@@ -9,7 +9,7 @@ const userData = [
   },
   {
     name: 'bob',
-    username: 'bob..builder',
+    username: 'bob.builder',
     website: 'bob.com',
     bio: 'i build things',
     email: 'bob@cat.com',

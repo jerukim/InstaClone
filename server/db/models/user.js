@@ -45,11 +45,15 @@ const User = db.define('user', {
       notEmpty: true,
     },
   },
-  // max character coutn 150
   bio: {
     type: Sequelize.TEXT,
     allowNull: true,
-    validate: {},
+    validate: {
+      characterLimit(value) {
+        if (value.length > 150)
+          throw new Error(`Ensure this value has at most 150 characters`);
+      },
+    },
   },
   // have default if none provided
   profileImg: {
