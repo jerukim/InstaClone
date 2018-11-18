@@ -9,14 +9,12 @@ const User = db.define('user', {
     validate: {
       notEmpty: true,
       characterLimit(value) {
-        if (value.length > 30) throw new Error(`above character limit of 30`);
+        if (value.length > 30)
+          throw new Error(`Ensure this value has at most 30 characters`);
       },
     },
   },
   username: {
-    // You can't start your username with a period
-    // You can't end your username with a period
-    // Ensure this value has at most 30 characters
     type: Sequelize.STRING,
     allowNull: false,
     unique: true,
@@ -26,9 +24,16 @@ const User = db.define('user', {
         args: '..',
         msg: "You can't have more than one period in a row",
       },
+      noPeriodAtStartOrEnd(value) {
+        if (value.startsWith('.'))
+          throw new Error(`You can't start your username with a period`);
 
+        if (value.endsWith('.'))
+          throw new Error(`You can't end your username with a period`);
+      },
       characterLimit(value) {
-        if (value.length > 30) throw new Error(`above character limit of 30`);
+        if (value.length > 30)
+          throw new Error(`Ensure this value has at most 30 characters`);
       },
     },
   },
