@@ -59,6 +59,7 @@ const User = db.define('user', {
   profileImg: {
     type: Sequelize.STRING,
     allowNull: true,
+    defaultValue: '/default-profile.png',
   },
   email: {
     type: Sequelize.STRING,
