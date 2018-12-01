@@ -4,13 +4,19 @@ module.exports = router;
 
 router.post('/login', async (req, res, next) => {
   try {
+    console.log('got here');
     const { login, password } = req.body;
+
+    console.log('login', login);
+    console.log('password', password);
 
     const loginType = login.includes('@') ? 'email' : 'username';
 
     const user = await User.findOne({
       where: { [loginType]: login },
     });
+
+    console.log('USER', user);
 
     if (!user) {
       console.log('No such user found:', login);
@@ -23,7 +29,7 @@ router.post('/login', async (req, res, next) => {
       console.log('Incorrect password for user:', login);
       res.status(401).send('Incorrect password');
     } else {
-      req.login();
+      req.login(user, err => (err ? next(err) : res.json(user)));
     }
   } catch (err) {
     next(err);

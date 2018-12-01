@@ -14,6 +14,7 @@ class Login extends Component {
 
   handleSubmit = () => {
     const { login, password } = this.state;
+    console.log('BUTTON', login);
     this.props.auth(login, password);
   };
 
@@ -23,18 +24,24 @@ class Login extends Component {
         <Text>Instagram</Text>
         <TextInput
           style={{ height: 40 }}
+          autoCapitalize="none"
           placeholder="Username or email"
           onChangeText={login => this.setState({ login })}
         />
         <TextInput
           style={{ height: 40 }}
           placeholder="Password"
+          secureTextEntry={true}
           onChangeText={password => this.setState({ password })}
         />
 
         <Button onPress={this.handleSubmit} title="Login" />
 
-        <Text>{this.props.isLoggedIn ? 'no user' : this.props.user.name}</Text>
+        <Text>
+          {this.state.login}, {this.state.password}
+        </Text>
+
+        <Text>{this.props.isLoggedIn ? this.props.user.name : 'no user'}</Text>
       </View>
     );
   }

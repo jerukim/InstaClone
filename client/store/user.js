@@ -1,5 +1,9 @@
 import axios from 'axios';
 
+const ax = axios.create({
+  baseURL: 'http://localhost:8080',
+});
+
 const GET_USER = 'GET_USER';
 const REMOVE_USER = 'REMOVE_USER';
 
@@ -17,11 +21,22 @@ export const me = () => async dispatch => {
   }
 };
 
-export const auth = (email, password, method) => async dispatch => {
+export const auth = (login, password, method) => async dispatch => {
+  console.log('got here', method);
+  console.log('THUNK', login, password);
   let res;
   try {
-    res = await axios.post(`/auth/${method}`, { email, password });
+    res = await ax.post(`/auth/${method}`, { login, password });
+    // res = await fetch(`http://localhost:8080/auth/${method}`, {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     email,
+    //     password,
+    //   }),
+    // });
+    console.log('AUTH', res);
   } catch (authError) {
+    console.log('AUTH ERROR', res);
     return dispatch(getUser({ error: authError }));
   }
 
