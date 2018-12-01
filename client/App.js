@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import { Text, View, Image, SafeAreaView, StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native';
+import { Provider } from 'react-redux';
+import store from './store';
+import { Login } from './Login';
 
 export default class App extends Component {
   render() {
     return (
-      <SafeAreaView>
-        <View>
-          <Text>Instagram</Text>
-        </View>
-      </SafeAreaView>
+      <Provider store={store}>
+        <SafeAreaView>
+          <Login />
+        </SafeAreaView>
+      </Provider>
     );
   }
 }

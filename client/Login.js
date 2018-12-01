@@ -3,7 +3,7 @@ import { Text, View, TextInput, Button, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { auth, removeUser } from './store';
 
-class Login extends Component {
+class AuthForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,19 +18,18 @@ class Login extends Component {
   };
 
   render() {
-    const { isLoggedIn, user } = this.props;
-    const { login, password } = this.state;
+    const { user, name, displayName, error } = this.props;
     return (
       <View>
         <Text>Instagram</Text>
         <TextInput
-          style={{ height: 40, backgroundColor: 'rgb(249, 249, 249)' }}
+          style={{ height: 40 }}
           autoCapitalize="none"
           placeholder="Username or email"
           onChangeText={login => this.setState({ login })}
         />
         <TextInput
-          style={{ height: 40, backgroundColor: 'rgb(249, 249, 249)' }}
+          style={{ height: 40 }}
           placeholder="Password"
           secureTextEntry={true}
           onChangeText={password => this.setState({ password })}
@@ -38,18 +37,34 @@ class Login extends Component {
 
         <Button onPress={this.handleSubmit} title="Login" />
 
-        {user.error &&
-          Alert.alert('Incorrect Username', `${user.error.response.data}`, [
-            { text: 'Try Again', onPress: () => this.props.removeUser() },
-          ])}
+        {error &&
+          Alert.alert(
+            error.response.data.title,
+            `${error.response.data.text}`,
+            [
+              {
+                text: 'Try Again',
+                onPress: () => this.props.removeUser(),
+              },
+            ]
+          )}
       </View>
     );
   }
 }
 
-const mapState = state => ({
-  isLoggedIn: !!state.user.id,
+const mapLogin = state => ({
   user: state.user,
+  name: 'login',
+  displayName: 'Login',
+  error: state.user.error,
+});
+
+const mapSignup = state => ({
+  user: state.user,
+  name: 'signup',
+  displayName: 'Sign Up',
+  error: state.user.error,
 });
 
 const mapDispatch = dispatch => ({
@@ -57,7 +72,11 @@ const mapDispatch = dispatch => ({
   removeUser: () => dispatch(removeUser()),
 });
 
-export default connect(
-  mapState,
+export const Login = connect(
+  mapLogin,
   mapDispatch
-)(Login);
+)(AuthForm);
+export const Signup = connect(
+  mapSignup,
+  mapDispatch
+)(AuthForm);
