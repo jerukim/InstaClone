@@ -9,6 +9,7 @@ class AuthForm extends Component {
     this.state = {
       login: '',
       password: '',
+      type: 'Login',
     };
   }
 
@@ -18,10 +19,12 @@ class AuthForm extends Component {
   };
 
   render() {
+    console.log('TYPE', this.state.type);
     const { user, name, displayName, error } = this.props;
+    const { type } = this.state;
     return (
       <View>
-        <Text>Instagram</Text>
+        <Text style={{ fontSize: 40, textAlign: 'center' }}>Instagram</Text>
         <TextInput
           style={{ height: 40 }}
           autoCapitalize="none"
@@ -34,8 +37,29 @@ class AuthForm extends Component {
           secureTextEntry={true}
           onChangeText={password => this.setState({ password })}
         />
+        <Button onPress={this.handleSubmit} title={this.state.type} />
 
-        <Button onPress={this.handleSubmit} title="Login" />
+        {type === 'Login' ? (
+          <Text style={{ textAlign: 'center' }}>
+            <Text>Don't have an account? </Text>
+            <Text
+              style={{ color: 'rgb(45, 130, 236)' }}
+              onPress={() => this.setState({ type: 'Sign Up' })}
+            >
+              Sign Up.
+            </Text>
+          </Text>
+        ) : (
+          <Text style={{ textAlign: 'center' }}>
+            <Text>Already have an account? </Text>
+            <Text
+              style={{ color: 'rgb(45, 130, 236)' }}
+              onPress={() => this.setState({ type: 'Login' })}
+            >
+              Sign In.
+            </Text>
+          </Text>
+        )}
 
         {error &&
           Alert.alert(
@@ -72,11 +96,7 @@ const mapDispatch = dispatch => ({
   removeUser: () => dispatch(removeUser()),
 });
 
-export const Login = connect(
-  mapLogin,
-  mapDispatch
-)(AuthForm);
-export const Signup = connect(
-  mapSignup,
+export default connect(
+  null,
   mapDispatch
 )(AuthForm);
