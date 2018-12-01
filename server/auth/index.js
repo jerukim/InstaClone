@@ -4,19 +4,13 @@ module.exports = router;
 
 router.post('/login', async (req, res, next) => {
   try {
-    console.log('got here');
     const { login, password } = req.body;
-
-    console.log('login', login);
-    console.log('password', password);
 
     const loginType = login.includes('@') ? 'email' : 'username';
 
     const user = await User.findOne({
       where: { [loginType]: login },
     });
-
-    console.log('USER', user);
 
     if (!user) {
       console.log('No such user found:', login);

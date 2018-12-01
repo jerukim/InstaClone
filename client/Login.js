@@ -14,7 +14,6 @@ class Login extends Component {
 
   handleSubmit = () => {
     const { login, password } = this.state;
-    console.log('BUTTON', login);
     this.props.auth(login, password);
   };
 
