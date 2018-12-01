@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, Button } from 'react-native';
+import { Text, View, TextInput, Button, Alert } from 'react-native';
 import { connect } from 'react-redux';
-import { auth } from './store';
+import { auth, removeUser } from './store';
 
 class Login extends Component {
   constructor(props) {
@@ -18,6 +18,8 @@ class Login extends Component {
   };
 
   render() {
+    const { isLoggedIn, user } = this.props;
+    const { login, password } = this.state;
     return (
       <View>
         <Text>Instagram</Text>
@@ -37,10 +39,15 @@ class Login extends Component {
         <Button onPress={this.handleSubmit} title="Login" />
 
         <Text>
-          {this.state.login}, {this.state.password}
+          {login}, {password}
         </Text>
 
-        <Text>{this.props.isLoggedIn ? this.props.user.name : 'no user'}</Text>
+        <Text>{isLoggedIn ? user.name : 'no user'}</Text>
+
+        {user.error &&
+          Alert.alert('Incorrect Username', `${user.error.response.data}`, [
+            { text: 'Try Again', onPress: () => this.props.removeUser() },
+          ])}
       </View>
     );
   }
@@ -53,6 +60,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   auth: (login, password) => dispatch(auth(login, password, 'login')),
+  removeUser: () => dispatch(removeUser()),
 });
 
 export default connect(
