@@ -15,7 +15,7 @@ const AppNavigator = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'Signup',
+    initialRouteName: 'Login',
   }
 );
 
@@ -26,7 +26,7 @@ const AuthStack = createStackNavigator(
   },
   {
     //sign up for debugging purposes, login as default
-    initialRouteName: 'Signup',
+    initialRouteName: 'Login',
   }
 );
 
@@ -34,7 +34,7 @@ const AppContainer = createAppContainer(
   createSwitchNavigator(
     {
       // AuthLoading: AuthLoading,
-      // App: AppNavigator,
+      App: AppNavigator,
       Auth: AuthStack,
     },
     {
