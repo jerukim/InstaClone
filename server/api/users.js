@@ -8,3 +8,5 @@ router.get('/:userId', async (req, res, next) => {
   const user = await User.findById(userId);
   res.json(user);
 });
+
+router.get('');

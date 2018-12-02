@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { SafeAreaView } from 'react-native';
 import {
   createStackNavigator,
   createAppContainer,
@@ -8,7 +7,6 @@ import {
 
 import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
-import AuthLoading from './components/auth/AuthLoading';
 
 const AppNavigator = createStackNavigator(
   {
@@ -17,7 +15,7 @@ const AppNavigator = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'Signup',
   }
 );
 
@@ -27,7 +25,8 @@ const AuthStack = createStackNavigator(
     Signup: Signup,
   },
   {
-    initialRouteName: 'Login',
+    //sign up for debugging purposes, login as default
+    initialRouteName: 'Signup',
   }
 );
 
@@ -35,7 +34,7 @@ const AppContainer = createAppContainer(
   createSwitchNavigator(
     {
       // AuthLoading: AuthLoading,
-      App: AppNavigator,
+      // App: AppNavigator,
       Auth: AuthStack,
     },
     {
