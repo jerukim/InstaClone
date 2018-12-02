@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import { Text, View, TextInput, Button, Alert } from 'react-native';
 import { connect } from 'react-redux';
-import { auth, removeUser } from './store';
+import { auth, removeUser } from '../../store';
 
-class AuthForm extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       login: '',
       password: '',
-      type: 'Login',
     };
   }
+
+  static navigationOptions = {
+    headerMode: 'none',
+  };
 
   handleSubmit = () => {
     const { login, password } = this.state;
@@ -19,47 +22,34 @@ class AuthForm extends Component {
   };
 
   render() {
-    console.log('TYPE', this.state.type);
-    const { user, name, displayName, error } = this.props;
-    const { type } = this.state;
+    const { navigate } = this.props.navigation;
+    const { error } = this.props;
     return (
       <View>
         <Text style={{ fontSize: 40, textAlign: 'center' }}>Instagram</Text>
         <TextInput
-          style={{ height: 40 }}
+          style={{ height: 40, backgroundColor: 'rgb(249, 249, 249)' }}
           autoCapitalize="none"
           placeholder="Username or email"
           onChangeText={login => this.setState({ login })}
         />
         <TextInput
-          style={{ height: 40 }}
+          style={{ height: 40, backgroundColor: 'rgb(249, 249, 249)' }}
           placeholder="Password"
           secureTextEntry={true}
           onChangeText={password => this.setState({ password })}
         />
-        <Button onPress={this.handleSubmit} title={this.state.type} />
+        <Button onPress={this.handleSubmit} title="Login" />
 
-        {type === 'Login' ? (
-          <Text style={{ textAlign: 'center' }}>
-            <Text>Don't have an account? </Text>
-            <Text
-              style={{ color: 'rgb(45, 130, 236)' }}
-              onPress={() => this.setState({ type: 'Sign Up' })}
-            >
-              Sign Up.
-            </Text>
+        <Text style={{ textAlign: 'center' }}>
+          <Text>Don't have an account? </Text>
+          <Text
+            style={{ color: 'rgb(45, 130, 236)' }}
+            onPress={() => navigate('Signup')}
+          >
+            Sign Up.
           </Text>
-        ) : (
-          <Text style={{ textAlign: 'center' }}>
-            <Text>Already have an account? </Text>
-            <Text
-              style={{ color: 'rgb(45, 130, 236)' }}
-              onPress={() => this.setState({ type: 'Login' })}
-            >
-              Sign In.
-            </Text>
-          </Text>
-        )}
+        </Text>
 
         {error &&
           Alert.alert(
@@ -77,17 +67,7 @@ class AuthForm extends Component {
   }
 }
 
-const mapLogin = state => ({
-  user: state.user,
-  name: 'login',
-  displayName: 'Login',
-  error: state.user.error,
-});
-
-const mapSignup = state => ({
-  user: state.user,
-  name: 'signup',
-  displayName: 'Sign Up',
+const mapState = state => ({
   error: state.user.error,
 });
 
@@ -97,6 +77,6 @@ const mapDispatch = dispatch => ({
 });
 
 export default connect(
-  null,
+  mapState,
   mapDispatch
-)(AuthForm);
+)(Login);
