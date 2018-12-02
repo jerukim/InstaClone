@@ -12,9 +12,9 @@ class Login extends Component {
     };
   }
 
-  static navigationOptions = {
-    headerMode: 'none',
-  };
+  // static navigationOptions = {
+  //   headerMode: 'none',
+  // };
 
   handleSubmit = () => {
     const { login, password } = this.state;

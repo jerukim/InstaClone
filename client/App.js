@@ -7,38 +7,26 @@ import {
 
 import Login from './components/auth/Login';
 import Signup from './components/auth/Signup';
+import AuthLoadingScreen from './components/auth/AuthLoadingScreen';
 
-const AppNavigator = createStackNavigator(
-  {
-    Login: {
-      screen: Login,
-    },
-  },
-  {
-    initialRouteName: 'Login',
-  }
-);
+const AppStack = createStackNavigator({
+  Login: Login,
+});
 
-const AuthStack = createStackNavigator(
-  {
-    Login: Login,
-    Signup: Signup,
-  },
-  {
-    //sign up for debugging purposes, login as default
-    initialRouteName: 'Login',
-  }
-);
+const AuthStack = createStackNavigator({
+  Login: Login,
+  Signup: Signup,
+});
 
 const AppContainer = createAppContainer(
   createSwitchNavigator(
     {
-      // AuthLoading: AuthLoading,
-      App: AppNavigator,
+      AuthLoading: AuthLoadingScreen,
+      App: AppStack,
       Auth: AuthStack,
     },
     {
-      initialRouteName: 'Auth',
+      initialRouteName: 'AuthLoading',
     }
   )
 );

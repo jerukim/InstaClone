@@ -23,7 +23,6 @@ class Signup extends Component {
     const { navigate } = this.props.navigation;
     const { email, username } = this.state;
     const defaultUsername = email.slice(0, email.indexOf('@') || email.length);
-    console.log(username, defaultUsername);
     return (
       <View>
         <Text style={{ fontSize: 40, textAlign: 'center' }}>Instagram</Text>
