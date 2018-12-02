@@ -72,7 +72,7 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  auth: (login, password) => dispatch(auth(login, password, 'login')),
+  auth: (login, password) => dispatch(auth('login', login, password)),
   removeUser: () => dispatch(removeUser()),
 });
 

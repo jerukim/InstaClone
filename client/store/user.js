@@ -21,10 +21,17 @@ export const me = () => async dispatch => {
   }
 };
 
-export const auth = (username, password, method) => async dispatch => {
+export const auth = (
+  method,
+  username,
+  password,
+  email,
+  name
+) => async dispatch => {
   let res;
+  console.log('email in auth thunk', email);
   try {
-    res = await ax.post(`/auth/${method}`, { username, password });
+    res = await ax.post(`/auth/${method}`, { username, password, email, name });
   } catch (authError) {
     return dispatch(getUser({ error: authError }));
   }

@@ -14,10 +14,16 @@ class Signup extends Component {
     };
   }
 
-  handleSubmit = () => {};
+  handleSubmit = () => {
+    const { email, name, username, password } = this.state;
+    this.props.auth(email, name, username, password);
+  };
 
   render() {
     const { navigate } = this.props.navigation;
+    const { email, username } = this.state;
+    const defaultUsername = email.slice(0, email.indexOf('@') || email.length);
+    console.log(username, defaultUsername);
     return (
       <View>
         <Text style={{ fontSize: 40, textAlign: 'center' }}>Instagram</Text>
@@ -26,6 +32,7 @@ class Signup extends Component {
           autoCapitalize="none"
           placeholder="Email"
           onChangeText={email => this.setState({ email })}
+          // onEndEditing={() => console.log('end editing')}
         />
         <TextInput
           style={{ height: 40, backgroundColor: 'rgb(249, 249, 249)' }}
@@ -46,15 +53,15 @@ class Signup extends Component {
           onChangeText={password => this.setState({ password })}
         />
 
-        <Button onPress={this.handleSubmit} title="Signup" />
+        <Button onPress={this.handleSubmit} title="Sign up" />
 
         <Text style={{ textAlign: 'center' }}>
-          <Text>Don't have an account? </Text>
+          <Text>Already have an account? </Text>
           <Text
             style={{ color: 'rgb(45, 130, 236)' }}
-            onPress={() => navigate('Signup')}
+            onPress={() => this.setState({ type: 'Login' })}
           >
-            Sign Up.
+            Sign In.
           </Text>
         </Text>
       </View>
@@ -62,19 +69,14 @@ class Signup extends Component {
   }
 }
 
-export default connect(
-  null,
-  null
-)(Signup);
+const mapState = state => ({});
 
-{
-  /* <Text style={{ textAlign: 'center' }}>
-  <Text>Already have an account? </Text>
-  <Text
-    style={{ color: 'rgb(45, 130, 236)' }}
-    onPress={() => this.setState({ type: 'Login' })}
-  >
-    Sign In.
-  </Text>
-</Text>; */
-}
+const mapDispatch = dispatch => ({
+  auth: (email, name, username, password) =>
+    dispatch(auth('signup', username, password, email, name)),
+});
+
+export default connect(
+  mapState,
+  mapDispatch
+)(Signup);
