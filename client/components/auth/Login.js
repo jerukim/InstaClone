@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, Button, Alert } from 'react-native';
+import { Text, SafeAreaView, TextInput, Button, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { auth, removeUser } from '../../store';
 
@@ -12,20 +12,20 @@ class Login extends Component {
     };
   }
 
-  // static navigationOptions = {
-  //   headerMode: 'none',
-  // };
-
-  handleSubmit = () => {
+  handleSubmit = async () => {
     const { login, password } = this.state;
-    this.props.auth(login, password);
+    const { navigate } = this.props.navigation;
+
+    const { user } = await this.props.auth(login, password);
+
+    if (user.id) navigate('App');
   };
 
   render() {
     const { navigate } = this.props.navigation;
     const { error } = this.props;
     return (
-      <View>
+      <SafeAreaView>
         <Text style={{ fontSize: 40, textAlign: 'center' }}>Instagram</Text>
         <TextInput
           style={{ height: 40, backgroundColor: 'rgb(249, 249, 249)' }}
@@ -62,7 +62,7 @@ class Login extends Component {
               },
             ]
           )}
-      </View>
+      </SafeAreaView>
     );
   }
 }

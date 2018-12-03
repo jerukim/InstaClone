@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, Button, Alert } from 'react-native';
+import { Text, SafeAreaView, TextInput, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { auth } from '../../store';
 
@@ -14,9 +14,12 @@ class Signup extends Component {
     };
   }
 
-  handleSubmit = () => {
+  handleSubmit = async () => {
     const { email, name, username, password } = this.state;
-    this.props.auth(email, name, username, password);
+    const { navigate } = this.props.navigation;
+    const { user } = await this.props.auth(email, name, username, password);
+
+    if (user.id) navigate('App');
   };
 
   render() {
@@ -24,7 +27,7 @@ class Signup extends Component {
     const { email, username } = this.state;
     const defaultUsername = email.slice(0, email.indexOf('@') || email.length);
     return (
-      <View>
+      <SafeAreaView>
         <Text style={{ fontSize: 40, textAlign: 'center' }}>Instagram</Text>
         <TextInput
           style={{ height: 40, backgroundColor: 'rgb(249, 249, 249)' }}
@@ -58,12 +61,12 @@ class Signup extends Component {
           <Text>Already have an account? </Text>
           <Text
             style={{ color: 'rgb(45, 130, 236)' }}
-            onPress={() => this.setState({ type: 'Login' })}
+            onPress={() => navigate('Login')}
           >
             Sign In.
           </Text>
         </Text>
-      </View>
+      </SafeAreaView>
     );
   }
 }
