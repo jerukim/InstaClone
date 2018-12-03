@@ -1,16 +1,25 @@
 import React, { Component } from 'react';
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import {
+  createAppContainer,
+  createSwitchNavigator,
+  createStackNavigator,
+} from 'react-navigation';
 
 import AuthStack from './components/auth';
 import AuthLoadingScreen from './components/auth/AuthLoadingScreen';
 
-import AppStack from './components/app';
+import AppTabs from './components/app';
 
 const AppContainer = createAppContainer(
   createSwitchNavigator(
     {
       AuthLoading: AuthLoadingScreen,
-      App: AppStack,
+      App: {
+        screen: AppTabs,
+        navigationOptions: {
+          headerTitle: 'Instagram',
+        },
+      },
       Auth: AuthStack,
     },
     {

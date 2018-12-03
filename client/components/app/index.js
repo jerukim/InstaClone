@@ -5,7 +5,7 @@ import PostScreen from './PostScreen';
 import LikesScreen from './LikesScreen';
 import UserScreen from './UserScreen';
 
-const AppStack = createBottomTabNavigator(
+const AppTabs = createBottomTabNavigator(
   {
     Home: HomeScreen,
     Post: PostScreen,
@@ -17,4 +17,4 @@ const AppStack = createBottomTabNavigator(
   }
 );
 
-export default AppStack;
+export default AppTabs;

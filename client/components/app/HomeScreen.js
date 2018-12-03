@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, SafeAreaView } from 'react-native';
 
 export default class HomeScreen extends React.Component {
   render() {
     return (
-      <View>
+      <SafeAreaView>
         <Text>Home!</Text>
-      </View>
+      </SafeAreaView>
     );
   }
 }
