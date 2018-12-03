@@ -14,12 +14,7 @@ const AppContainer = createAppContainer(
   createSwitchNavigator(
     {
       AuthLoading: AuthLoadingScreen,
-      App: {
-        screen: AppTabs,
-        navigationOptions: {
-          headerTitle: 'Instagram',
-        },
-      },
+      App: AppTabs,
       Auth: AuthStack,
     },
     {

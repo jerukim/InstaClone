@@ -1,19 +1,19 @@
 import { createBottomTabNavigator } from 'react-navigation';
 
-import HomeScreen from './HomeScreen';
+import HomeStack from './HomeScreen';
 import PostScreen from './PostScreen';
 import LikesScreen from './LikesScreen';
 import UserScreen from './UserScreen';
 
 const AppTabs = createBottomTabNavigator(
   {
-    Home: HomeScreen,
+    HomeTab: HomeStack,
     Post: PostScreen,
     Likes: LikesScreen,
     User: UserScreen,
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'HomeTab',
   }
 );
 

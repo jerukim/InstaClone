@@ -9,8 +9,9 @@ class AuthLoadingScreen extends React.Component {
   }
 
   checkForUser = () => {
+    const { navigate } = this.props.navigation;
     const { isLoggedIn } = this.props;
-    this.props.navigation.navigate(isLoggedIn ? 'App' : 'Auth');
+    navigate(isLoggedIn ? 'App' : 'Auth');
   };
 
   render() {
