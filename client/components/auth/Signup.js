@@ -14,9 +14,12 @@ class Signup extends Component {
     };
   }
 
-  handleSubmit = () => {
+  handleSubmit = async () => {
     const { email, name, username, password } = this.state;
-    this.props.auth(email, name, username, password);
+    const { navigate } = this.props.navigation;
+    const { user } = await this.props.auth(email, name, username, password);
+
+    if (user.id) navigate('App');
   };
 
   render() {
