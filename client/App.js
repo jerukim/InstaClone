@@ -1,22 +1,10 @@
 import React, { Component } from 'react';
-import {
-  createStackNavigator,
-  createAppContainer,
-  createSwitchNavigator,
-} from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
-import Login from './components/auth/Login';
-import Signup from './components/auth/Signup';
+import AuthStack from './components/auth';
 import AuthLoadingScreen from './components/auth/AuthLoadingScreen';
 
-const AppStack = createStackNavigator({
-  Login: Login,
-});
-
-const AuthStack = createStackNavigator({
-  Login: Login,
-  Signup: Signup,
-});
+import AppStack from './components/app';
 
 const AppContainer = createAppContainer(
   createSwitchNavigator(

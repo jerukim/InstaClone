@@ -12,10 +12,6 @@ class Login extends Component {
     };
   }
 
-  // static navigationOptions = {
-  //   headerMode: 'none',
-  // };
-
   handleSubmit = () => {
     const { login, password } = this.state;
     this.props.auth(login, password);
