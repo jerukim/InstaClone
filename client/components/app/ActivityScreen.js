@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, SafeAreaView } from 'react-native';
 
-export default class LikesScreen extends React.Component {
+export default class ActivityScreen extends React.Component {
   render() {
     return (
       <SafeAreaView>

@@ -6,7 +6,7 @@ import {
 import HomeScreen from './HomeScreen';
 import ExploreScreen from './ExploreScreen';
 import PostScreen from './PostScreen';
-import LikesScreen from './LikesScreen';
+import ActivityScreen from './ActivityScreen';
 import UserScreen from './UserScreen';
 
 const HomeStack = createStackNavigator(
@@ -48,17 +48,17 @@ const PostStack = createStackNavigator(
     initialRouteName: 'Post',
   }
 );
-const LikesStack = createStackNavigator(
+const ActivityStack = createStackNavigator(
   {
-    Likes: {
-      screen: LikesScreen,
+    Activity: {
+      screen: ActivityScreen,
       navigationOptions: {
         headerTitle: 'Activity',
       },
     },
   },
   {
-    initialRouteName: 'Likes',
+    initialRouteName: 'Activity',
   }
 );
 const UserStack = createStackNavigator(
@@ -80,7 +80,7 @@ const AppTabs = createBottomTabNavigator(
     HomeTab: HomeStack,
     ExploreTab: ExploreStack,
     PostTab: PostStack,
-    LikesTab: LikesStack,
+    ActivityTab: ActivityStack,
     UserTab: UserStack,
   },
   {
