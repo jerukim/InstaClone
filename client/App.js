@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import {
-  createAppContainer,
-  createSwitchNavigator,
-  createStackNavigator,
-} from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 
 import AuthStack from './components/auth';
 import AuthLoadingScreen from './components/auth/AuthLoadingScreen';

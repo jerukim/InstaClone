@@ -1,14 +1,14 @@
 import React from 'react';
 import { Text, SafeAreaView } from 'react-native';
 
-class HomeScreen extends React.Component {
+class ExploreScreen extends React.Component {
   render() {
     return (
       <SafeAreaView>
-        <Text>Home!</Text>
+        <Text>EXPLORE!</Text>
       </SafeAreaView>
     );
   }
 }
 
-export default HomeScreen;
+export default ExploreScreen;
