@@ -19,7 +19,7 @@ Like.belongsTo(Comment);
 // relationship
 
 Post.hasMany(Tag);
-Tag.belongsToMany(Post);
+Tag.belongsTo(Post);
 
 module.exports = {
   User,

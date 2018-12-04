@@ -17,6 +17,30 @@ const userData = [
   },
 ];
 
+const postData = [
+  {
+    userId: 1,
+    path: '1.jpg',
+    caption: 'sludge',
+  },
+  {
+    userId: 1,
+    path: '2.jpg',
+    caption: 'grave danger',
+  },
+  {
+    userId: 1,
+    path: '3.jpg',
+    caption: 'the upside down',
+  },
+  {
+    userId: 1,
+    path: '4.jpg',
+    caption: 'gaudi lights',
+  },
+];
+
 module.exports = {
   userData,
+  postData,
 };
