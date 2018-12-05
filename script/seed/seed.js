@@ -164,9 +164,45 @@ const commentData = [
   },
 ];
 
+const relationshipData = [
+  {
+    userId: 2,
+    followingId: 1,
+  },
+  {
+    userId: 3,
+    followingId: 1,
+  },
+  {
+    userId: 4,
+    followingId: 1,
+  },
+  {
+    userId: 1,
+    followingId: 2,
+  },
+  {
+    userId: 3,
+    followingId: 2,
+  },
+  {
+    userId: 2,
+    followingId: 4,
+  },
+  {
+    userId: 4,
+    followingId: 3,
+  },
+  {
+    userId: 3,
+    followingId: 4,
+  },
+];
+
 module.exports = {
   userData,
   postData,
   likeData,
   commentData,
+  relationshipData,
 };
