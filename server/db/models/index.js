@@ -13,8 +13,8 @@ Comment.belongsTo(Post);
 
 User.hasMany(Like);
 Like.belongsTo(User);
-Comment.hasMany(Like);
-Like.belongsTo(Comment);
+Post.hasMany(Like);
+Like.belongsTo(Post);
 
 // relationship
 
