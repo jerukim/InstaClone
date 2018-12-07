@@ -16,7 +16,6 @@ Like.belongsTo(User);
 Post.hasMany(Like);
 Like.belongsTo(Post);
 
-// relationship, user to user
 User.belongsToMany(User, { through: Relationship, as: 'following' });
 
 Post.hasMany(Tag);
