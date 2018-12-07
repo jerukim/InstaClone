@@ -1,6 +1,19 @@
 const db = require('../../server/db');
-const { User } = require('../../server/db/models');
-const { userData } = require('./seed');
+const {
+  User,
+  Post,
+  Comment,
+  Like,
+  Relationship,
+  Tag,
+} = require('../../server/db/models');
+const {
+  userData,
+  postData,
+  likeData,
+  commentData,
+  relationshipData,
+} = require('./seed');
 
 async function seed() {
   await db.sync({ force: true });
@@ -8,6 +21,22 @@ async function seed() {
 
   const users = await Promise.all(userData.map(user => User.create(user)));
   console.log(`seeded ${users.length} users`);
+
+  const posts = await Promise.all(postData.map(post => Post.create(post)));
+  console.log(`seeded ${posts.length} posts`);
+
+  const likes = await Promise.all(likeData.map(like => Like.create(like)));
+  console.log(`seeded ${likes.length} likes`);
+
+  const comments = await Promise.all(
+    commentData.map(comment => Comment.create(comment))
+  );
+  console.log(`seeded ${comments.length} comments`);
+
+  const relationships = await Promise.all(
+    relationshipData.map(relationship => Relationship.create(relationship))
+  );
+  console.log(`seeded ${relationships.length} relationships`);
 
   console.log('seeded successfully');
 }
