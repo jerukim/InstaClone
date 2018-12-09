@@ -1,5 +1,6 @@
 const userData = [
   {
+    id: 1,
     name: 'jeru kim',
     username: 'dude_man',
     website: 'google.com',
@@ -8,6 +9,7 @@ const userData = [
     password: 'password',
   },
   {
+    id: 2,
     name: 'bob',
     username: 'bob.builder',
     website: 'bob.com',
@@ -16,6 +18,7 @@ const userData = [
     password: 'password',
   },
   {
+    id: 3,
     name: 'joe',
     username: 'average',
     website: 'www.cotton.com',
@@ -24,6 +27,7 @@ const userData = [
     password: 'password',
   },
   {
+    id: 4,
     name: 'steve jobs',
     username: 'apple',
     website: 'www.apple.com',

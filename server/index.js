@@ -10,6 +10,9 @@ const sessionStore = new SequelizeStore({ db });
 const PORT = process.env.PORT || 8080;
 const app = express();
 
+const { ApolloServer } = require('apollo-server-express');
+const { typeDefs, resolvers } = require('./schema');
+
 module.exports = app;
 
 passport.serializeUser((user, done) => done(null, user.id));
@@ -74,8 +77,13 @@ const createApp = () => {
 
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
-  const server = app.listen(PORT, () =>
-    console.log(`Mixing it up on port ${PORT}`)
+  const server = new ApolloServer({ typeDefs, resolvers });
+
+  server.applyMiddleware({ app });
+
+  // const server = ...
+  app.listen(PORT, () =>
+    console.log(`Mixing it up on port ${PORT}${server.graphqlPath}`)
   );
 };
 
