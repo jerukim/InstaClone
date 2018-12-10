@@ -10,9 +10,30 @@ class UserAPI extends DataSource {
     this.context = config.context;
   }
 
-  async getUser(id) {
+  async getUserData(id) {
     const user = await this.store.users.findById(id);
-    console.log(user);
+
+    const userPosts = await this.store.posts.findAll({
+      where: {
+        userId: id,
+      },
+    });
+    const postCount = userPosts.length;
+
+    const userFollowers = await this.store.relationships.findAll({
+      where: { followingId: id },
+    });
+    const followers = userFollowers.length;
+
+    const userFollowing = await this.store.relationships.findAll({
+      where: { userId: id },
+    });
+    const following = userFollowing.length;
+
+    user.postCount = postCount;
+    user.followers = followers;
+    user.following = following;
+
     return user;
   }
 

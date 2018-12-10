@@ -20,7 +20,7 @@ const typeDefs = gql`
     following: Int
     posts: [Post]
     postCount: Int
-    #profile picture
+    profilePhoto: String
   }
 
   type Post {
@@ -38,17 +38,16 @@ const typeDefs = gql`
 
   type Query {
     users: [User]
-    user(id: Int!): User
+    userById(id: Int!): User
     post(id: Int!): [Post]
   }
 `;
 
 const resolvers = {
   Query: {
-    users: () => userData,
-    user: async (parent, args, { dataSources }, info) => {
-      const user = await dataSources.userAPI.getUser(args.id);
-      return user;
+    userById: async (parent, args, { dataSources }, info) => {
+      const userData = await dataSources.userAPI.getUserData(args.id);
+      return userData;
     },
     post(parent, args, context, info) {
       return find(postData, { id: args.id });
