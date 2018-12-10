@@ -1,14 +1,6 @@
 const { gql } = require('apollo-server-express');
 const { find } = require('lodash');
 
-const {
-  userData,
-  postData,
-  likeData,
-  commentData,
-  relationshipData,
-} = require('../../script/seed/seed');
-
 const typeDefs = gql`
   type User {
     name: String
