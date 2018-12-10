@@ -12,6 +12,9 @@ const app = express();
 
 const { ApolloServer } = require('apollo-server-express');
 const { typeDefs, resolvers } = require('./schema');
+const { User } = require('./db/models');
+const UserAPI = require('./datasources/user');
+const models = require('./db/models');
 
 module.exports = app;
 
@@ -77,7 +80,16 @@ const createApp = () => {
 
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
-  const server = new ApolloServer({ typeDefs, resolvers });
+
+  const apolloStore = () => ({
+    users: User,
+  });
+
+  const dataSources = () => ({
+    userAPI: new UserAPI({ store: apolloStore() }),
+  });
+
+  const server = new ApolloServer({ typeDefs, resolvers, dataSources });
 
   server.applyMiddleware({ app });
 

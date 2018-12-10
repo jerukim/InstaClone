@@ -16,6 +16,11 @@ const typeDefs = gql`
     website: String
     bio: String
     email: String
+    followers: Int
+    following: Int
+    posts: [Post]
+    postCount: Int
+    #profile picture
   }
 
   type Post {
@@ -34,14 +39,19 @@ const typeDefs = gql`
   type Query {
     users: [User]
     user(id: Int!): User
+    post(id: Int!): [Post]
   }
 `;
 
 const resolvers = {
   Query: {
     users: () => userData,
-    user(parent, args, context, info) {
-      return find(userData, { id: args.id });
+    user: async (parent, args, { dataSources }, info) => {
+      const user = await dataSources.userAPI.getUser(args.id);
+      return user;
+    },
+    post(parent, args, context, info) {
+      return find(postData, { id: args.id });
     },
   },
 };
