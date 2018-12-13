@@ -10,6 +10,7 @@
     "start-server": "nodemon server -e html,js,scss --ignore public --ignore client"
   },
   "dependencies": {
+    "apollo-boost": "^0.1.22",
     "apollo-datasource": "^0.2.1",
     "apollo-server-express": "^2.2.6",
     "axios": "^0.18.0",
@@ -18,12 +19,11 @@
     "express-graphql": "^0.7.1",
     "express-session": "^1.15.6",
     "graphql": "^14.0.2",
-    "lodash": "^4.17.11",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "pg": "^7.6.1",
-    "postgraphile": "^4.1.0",
-    "react": "16.6.0-alpha.8af6728",
+    "react": "^16.6.3",
+    "react-apollo": "^2.3.2",
     "react-native": "0.57.4",
     "react-native-gesture-handler": "^1.0.10",
     "react-navigation": "^3.0.4",
