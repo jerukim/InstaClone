@@ -5,14 +5,18 @@ const ax = axios.create({
 });
 
 const GET_USER = 'GET_USER';
+const GET_USER_DATA = 'GET_USER_DATA';
 const REMOVE_USER = 'REMOVE_USER';
 
 const defaultUser = {};
 
+// AUTH
 const getUser = user => ({ type: GET_USER, user });
+const getUserData = userData => ({ type: GET_USER_DATA, userData });
 export const removeUser = () => ({ type: REMOVE_USER });
 
 export const me = () => async dispatch => {
+  console.log('ME THUNK');
   try {
     const res = await axios.get('/auth/me');
     dispatch(getUser(res.data || defaultUser));
@@ -28,6 +32,7 @@ export const auth = (
   email,
   name
 ) => async dispatch => {
+  console.log('AUTH THUNK');
   let res;
   try {
     res = await ax.post(`/auth/${method}`, { username, password, email, name });
@@ -50,11 +55,42 @@ export const logout = () => async dispatch => {
     console.error(err);
   }
 };
+// --------------
+
+export const fetchUserData = userId => async dispatch => {
+  try {
+    const userData = await axios({
+      url: 'http://localhost:8080/graphql',
+      method: 'post',
+      data: {
+        query: `
+        query {
+          userById(id: ${userId}) {
+            username
+            profilePhoto
+            name
+            bio
+            website
+            postCount
+            followers
+            following
+          }
+        }
+          `,
+      },
+    });
+    dispatch(getUserData(userData.data.data.userById));
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
       return action.user;
+    case GET_USER_DATA:
+      return { ...state, ...action.userData };
     case REMOVE_USER:
       return defaultUser;
     default:
