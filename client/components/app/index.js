@@ -65,9 +65,9 @@ const UserStack = createStackNavigator(
   {
     User: {
       screen: UserScreen,
-      navigationOptions: {
-        headerTitle: 'You',
-      },
+      // navigationOptions: {
+      //   headerTitle: 'You',
+      // },
     },
   },
   {

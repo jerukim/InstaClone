@@ -12,7 +12,7 @@ const defaultUser = {};
 
 // AUTH
 const getUser = user => ({ type: GET_USER, user });
-const getUserData = user => ({ type: GET_USER_DATA, user });
+const getUserData = userData => ({ type: GET_USER_DATA, userData });
 export const removeUser = () => ({ type: REMOVE_USER });
 
 export const me = () => async dispatch => {
@@ -59,9 +59,12 @@ export const logout = () => async dispatch => {
 
 export const fetchUserData = userId => async dispatch => {
   try {
-    const userData = await axios.post('/graphql', {
-      query: `
-        query:
+    const userData = await axios({
+      url: 'http://localhost:8080/graphql',
+      method: 'post',
+      data: {
+        query: `
+        query {
           userById(id: ${userId}) {
             username
             profilePhoto
@@ -72,9 +75,11 @@ export const fetchUserData = userId => async dispatch => {
             followers
             following
           }
-      `,
+        }
+          `,
+      },
     });
-    dispatch(getUserData(userData));
+    dispatch(getUserData(userData.data.data.userById));
   } catch (err) {
     console.error(err);
   }
@@ -85,7 +90,7 @@ export default function(state = defaultUser, action) {
     case GET_USER:
       return action.user;
     case GET_USER_DATA:
-      return;
+      return { ...state, ...action.userData };
     case REMOVE_USER:
       return defaultUser;
     default:

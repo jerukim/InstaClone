@@ -4,6 +4,12 @@ import { Text, SafeAreaView, Button } from 'react-native';
 import { removeUser, fetchUserData } from '../../store';
 
 class UserScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: navigation.getParam('username', 'you'),
+    };
+  };
+
   logout = () => {
     const { navigate } = this.props.navigation;
     this.props.removeUser();
@@ -16,12 +22,19 @@ class UserScreen extends React.Component {
 
   componentDidMount() {
     this.fetchUserData(this.props.user.id);
+    this.props.navigation.setParams({ username: this.props.user.username });
   }
 
   render() {
+    const { user } = this.props;
     return (
       <SafeAreaView>
-        <Text>USERS!</Text>
+        <Text>Posts: {user.postCount}</Text>
+        <Text>Follower: {user.followers}</Text>
+        <Text>Following: {user.following}</Text>
+        <Text>{user.name}</Text>
+        <Text>{user.bio}</Text>
+        <Text>{user.website}</Text>
         <Button title="Sign Out" onPress={this.logout} />
       </SafeAreaView>
     );
