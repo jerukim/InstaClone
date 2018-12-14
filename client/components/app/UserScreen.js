@@ -14,8 +14,11 @@ class UserScreen extends React.Component {
     this.props.fetchUserData(userId);
   };
 
+  componentDidMount() {
+    this.fetchUserData(this.props.user.id);
+  }
+
   render() {
-    if (!this.props.user.id) this.fetchUserData();
     return (
       <SafeAreaView>
         <Text>USERS!</Text>
@@ -25,13 +28,17 @@ class UserScreen extends React.Component {
   }
 }
 
+const mapState = state => ({
+  user: state.user,
+});
+
 const mapDispatch = dispatch => ({
   removeUser: () => dispatch(removeUser()),
   fetchUserData: id => dispatch(fetchUserData(id)),
 });
 
 export default connect(
-  null,
+  mapState,
   mapDispatch
 )(UserScreen);
 

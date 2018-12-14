@@ -59,7 +59,7 @@ export const logout = () => async dispatch => {
 
 export const fetchUserData = userId => async dispatch => {
   try {
-    await axios.post('/graphql', {
+    const userData = await axios.post('/graphql', {
       query: `
         query:
           userById(id: ${userId}) {
@@ -74,7 +74,7 @@ export const fetchUserData = userId => async dispatch => {
           }
       `,
     });
-    dispatch(getUserData());
+    dispatch(getUserData(userData));
   } catch (err) {
     console.error(err);
   }
