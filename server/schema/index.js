@@ -8,8 +8,8 @@ const typeDefs = gql`
     website: String
     bio: String
     email: String
-    followers: Int
-    following: Int
+    followersCount: Int
+    followingCount: Int
     posts: [Post]
     postCount: Int
     profilePhoto: String
@@ -29,22 +29,43 @@ const typeDefs = gql`
   }
 
   type Query {
-    users: [User]
     userById(id: Int!): User
-    posts(id: Int!): [Post]
+    postsByUserId(id: Int!): [Post]
+    getUserFeed(id: Int!): [Post]
   }
 `;
 
 const resolvers = {
   Query: {
     userById: async (parent, args, { dataSources }, info) => {
-      const userData = await dataSources.userAPI.getUserData(args.id);
-      return userData;
+      try {
+        const userDataPromise = dataSources.userAPI.getUserData(args.id);
+        const userPostsPromise = dataSources.postAPI.getUserPosts(args.id);
+
+        const [userData, userPosts] = await Promise.all([
+          userDataPromise,
+          userPostsPromise,
+        ]);
+        userData.posts = userPosts;
+        return userData;
+      } catch (err) {
+        console.error(err);
+      }
     },
-    posts: async (parent, args, { dataSources }, info) => {
-      console.log('got to posts query resolver');
-      const userPosts = await dataSources.postAPI.getUserPosts(args.id);
-      return userPosts;
+    postsByUserId: async (parent, args, { dataSources }, info) => {
+      try {
+        const userPosts = await dataSources.postAPI.getUserPosts(args.id);
+        return userPosts;
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    getUserFeed: async (parent, args, { dataSources }, info) => {
+      try {
+        const userFeed = 'something';
+      } catch (err) {
+        console.error(err);
+      }
     },
   },
 };

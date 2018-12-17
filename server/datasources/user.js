@@ -23,16 +23,16 @@ class UserAPI extends DataSource {
     const userFollowers = await this.store.relationships.findAll({
       where: { followingId: id },
     });
-    const followers = userFollowers.length;
+    const followersCount = userFollowers.length;
 
     const userFollowing = await this.store.relationships.findAll({
       where: { userId: id },
     });
-    const following = userFollowing.length;
+    const followingCount = userFollowing.length;
 
     user.postCount = postCount;
-    user.followers = followers;
-    user.following = following;
+    user.followersCount = followersCount;
+    user.followingCount = followingCount;
 
     return user;
   }

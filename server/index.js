@@ -15,6 +15,7 @@ const { typeDefs, resolvers } = require('./schema');
 const models = require('./db/models');
 const UserAPI = require('./datasources/user');
 const PostAPI = require('./datasources/post');
+const RelationshipAPI = require('./datasources/relationship');
 
 module.exports = app;
 
@@ -95,6 +96,7 @@ const startListening = () => {
   const dataSources = () => ({
     userAPI: new UserAPI({ store }),
     postAPI: new PostAPI({ store }),
+    relationshipAPI: new RelationshipAPI({ store }),
   });
 
   const server = new ApolloServer({ typeDefs, resolvers, dataSources });
