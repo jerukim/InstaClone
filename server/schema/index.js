@@ -31,7 +31,7 @@ const typeDefs = gql`
   type Query {
     users: [User]
     userById(id: Int!): User
-    post(id: Int!): [Post]
+    posts(id: Int!): [Post]
   }
 `;
 
@@ -41,8 +41,10 @@ const resolvers = {
       const userData = await dataSources.userAPI.getUserData(args.id);
       return userData;
     },
-    post(parent, args, context, info) {
-      return find(postData, { id: args.id });
+    posts: async (parent, args, { dataSources }, info) => {
+      console.log('got to posts query resolver');
+      const userPosts = await dataSources.postAPI.getUserPosts(args.id);
+      return userPosts;
     },
   },
 };
