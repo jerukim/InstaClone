@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 const UPDATED_HOME_FEED = 'UPDATED_HOME_FEED';
 
 export const updatedHomeFeed = postIds => ({

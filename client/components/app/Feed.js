@@ -27,7 +27,7 @@ class Feed extends React.PureComponent {
           data={Object.keys(feed)}
           renderItem={({ item }) => {
             return (
-              <View>
+              <View key={item}>
                 <Image
                   source={{ uri: `${uri}${posts[item].path}` }}
                   style={{ width: 350, height: 350 }}

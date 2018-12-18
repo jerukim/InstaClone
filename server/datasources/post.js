@@ -31,7 +31,6 @@ class PostAPI extends DataSource {
           },
         },
       });
-      console.log(userFeed);
       return userFeed;
     } catch (err) {
       console.error(err);
