@@ -1,5 +1,4 @@
 const { gql } = require('apollo-server-express');
-const { find } = require('lodash');
 
 const typeDefs = gql`
   type User {
@@ -8,16 +7,18 @@ const typeDefs = gql`
     website: String
     bio: String
     email: String
-    followers: Int
-    following: Int
+    followersCount: Int
+    followingCount: Int
     posts: [Post]
     postCount: Int
     profilePhoto: String
   }
 
   type Post {
+    id: Int!
     path: String!
     caption: String
+    userId: Int!
   }
 
   type Like {
@@ -29,20 +30,62 @@ const typeDefs = gql`
   }
 
   type Query {
-    users: [User]
-    userById(id: Int!): User
-    post(id: Int!): [Post]
+    getUserDataById(id: Int!): User
+    postsByUserId(id: Int!): [Post]
+    getUserFeed(id: Int!): [Post]
   }
 `;
 
 const resolvers = {
   Query: {
-    userById: async (parent, args, { dataSources }, info) => {
-      const userData = await dataSources.userAPI.getUserData(args.id);
-      return userData;
+    getUserDataById: async (parent, args, { dataSources }, info) => {
+      try {
+        const { id } = args;
+
+        const userDataPromise = dataSources.userAPI.getUserData(id);
+        const userRelationshipsPromise = dataSources.relationshipAPI.getUserRelationshipCounts(
+          id
+        );
+        const userPostsPromise = dataSources.postAPI.getUserPosts(id);
+
+        const [userData, userRelationships, userPosts] = await Promise.all([
+          userDataPromise,
+          userRelationshipsPromise,
+          userPostsPromise,
+        ]);
+
+        userData.posts = userPosts;
+        userData.postCount = userPosts.length;
+        userData.followingCount = userRelationships.followingCount;
+        userData.followersCount = userRelationships.followingCount;
+
+        return userData;
+      } catch (err) {
+        console.error(err);
+      }
     },
-    post(parent, args, context, info) {
-      return find(postData, { id: args.id });
+    postsByUserId: async (parent, args, { dataSources }, info) => {
+      try {
+        const userPosts = await dataSources.postAPI.getUserPosts(args.id);
+        return userPosts;
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    getUserFeed: async (parent, args, { dataSources }, info) => {
+      try {
+        const userFollowing = await dataSources.relationshipAPI.getUserFollowingList(
+          args.id
+        );
+        const userFeed = await dataSources.postAPI.getUserFeed([
+          ...userFollowing,
+          args.id,
+        ]);
+
+        return userFeed;
+      } catch (err) {
+        console.error(err);
+      }
     },
   },
 };

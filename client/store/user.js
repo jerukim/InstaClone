@@ -65,7 +65,7 @@ export const fetchUserData = userId => async dispatch => {
       data: {
         query: `
         query {
-          userById(id: ${userId}) {
+          getUserDataById(id: ${userId}) {
             username
             profilePhoto
             name

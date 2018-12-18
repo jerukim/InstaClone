@@ -14,6 +14,8 @@ const { ApolloServer } = require('apollo-server-express');
 const { typeDefs, resolvers } = require('./schema');
 const models = require('./db/models');
 const UserAPI = require('./datasources/user');
+const PostAPI = require('./datasources/post');
+const RelationshipAPI = require('./datasources/relationship');
 
 module.exports = app;
 
@@ -89,8 +91,12 @@ const startListening = () => {
     tags: models.Tag,
   });
 
+  const store = apolloStore();
+
   const dataSources = () => ({
-    userAPI: new UserAPI({ store: apolloStore() }),
+    userAPI: new UserAPI({ store }),
+    postAPI: new PostAPI({ store }),
+    relationshipAPI: new RelationshipAPI({ store }),
   });
 
   const server = new ApolloServer({ typeDefs, resolvers, dataSources });
