@@ -1,9 +1,5 @@
 import axios from 'axios';
 
-const ax = axios.create({
-  baseURL: 'http://localhost:8080',
-});
-
 const GET_USER_POSTS = 'GET_USER_POSTS';
 const GET_USER_FEED = 'GET_USER_FEED';
 
@@ -36,6 +32,7 @@ export const getUserFeed = userId => async dispatch => {
           getUserFeed(id: ${userId}) {
             path
             caption
+            userId
           }
         }
           `,

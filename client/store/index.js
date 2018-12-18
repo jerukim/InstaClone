@@ -7,13 +7,14 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import user from './user';
 import post from './post';
+import users from './users';
 
 const persistConfig = {
   key: 'root',
   storage,
 };
 
-const reducer = combineReducers({ user, post });
+const reducer = combineReducers({ user, posts: post, usersById: users });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 

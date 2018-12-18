@@ -18,6 +18,7 @@ const typeDefs = gql`
   type Post {
     path: String!
     caption: String
+    userId: Int!
   }
 
   type Like {

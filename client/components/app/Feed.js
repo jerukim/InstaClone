@@ -11,16 +11,12 @@ import {
 
 import { getUserFeed } from '../../store';
 
-const amazon = 'https://s3.us-east-2.amazonaws.com/instaclone-jeru';
-
-const data = [];
-
 class Feed extends React.PureComponent {
   async componentDidMount() {
     await this.props.getUserFeed(this.props.user.id);
   }
   render() {
-    const posts = this.props.post.following;
+    const posts = this.props.posts.following;
     const uri = `https://s3.us-east-2.amazonaws.com/instaclone-jeru/`;
 
     // if (!this.props.post.following.length) return;
@@ -30,10 +26,8 @@ class Feed extends React.PureComponent {
         <FlatList
           data={posts}
           renderItem={({ item }) => {
-            console.log(item);
-            console.log(`${uri}${item.path}`);
             return (
-              <View>
+              <View key={item.path}>
                 <Image
                   source={{ uri: `${uri}${item.path}` }}
                   style={{ width: 350, height: 350 }}
@@ -50,7 +44,7 @@ class Feed extends React.PureComponent {
 
 const mapState = state => ({
   user: state.user,
-  post: state.post,
+  posts: state.posts,
 });
 
 const mapDispatch = dispatch => ({
