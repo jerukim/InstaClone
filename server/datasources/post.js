@@ -1,4 +1,5 @@
 const { DataSource } = require('apollo-datasource');
+const { Op } = require('sequelize');
 
 class PostAPI extends DataSource {
   constructor({ store }) {
@@ -11,11 +12,30 @@ class PostAPI extends DataSource {
   }
 
   async getUserPosts(userId) {
-    const userPosts = await this.store.posts.findAll({
-      where: { userId },
-    });
+    try {
+      const userPosts = await this.store.posts.findAll({
+        where: { userId },
+      });
+      return userPosts;
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
-    return userPosts;
+  async getUserFeed(userIds) {
+    try {
+      const userFeed = await this.store.posts.findAll({
+        where: {
+          userId: {
+            [Op.or]: userIds,
+          },
+        },
+      });
+      console.log(userFeed);
+      return userFeed;
+    } catch (err) {
+      console.error(err);
+    }
   }
 }
 

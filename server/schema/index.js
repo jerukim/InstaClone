@@ -29,7 +29,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    userById(id: Int!): User
+    getUserDataById(id: Int!): User
     postsByUserId(id: Int!): [Post]
     getUserFeed(id: Int!): [Post]
   }
@@ -37,16 +37,27 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    userById: async (parent, args, { dataSources }, info) => {
+    getUserDataById: async (parent, args, { dataSources }, info) => {
       try {
-        const userDataPromise = dataSources.userAPI.getUserData(args.id);
-        const userPostsPromise = dataSources.postAPI.getUserPosts(args.id);
+        const { id } = args;
 
-        const [userData, userPosts] = await Promise.all([
+        const userDataPromise = dataSources.userAPI.getUserData(id);
+        const userRelationshipsPromise = dataSources.relationshipAPI.getUserRelationshipCounts(
+          id
+        );
+        const userPostsPromise = dataSources.postAPI.getUserPosts(id);
+
+        const [userData, userRelationships, userPosts] = await Promise.all([
           userDataPromise,
+          userRelationshipsPromise,
           userPostsPromise,
         ]);
+
         userData.posts = userPosts;
+        userData.postCount = userPosts.length;
+        userData.followingCount = userRelationships.followingCount;
+        userData.followersCount = userRelationships.followingCount;
+
         return userData;
       } catch (err) {
         console.error(err);
@@ -62,7 +73,15 @@ const resolvers = {
     },
     getUserFeed: async (parent, args, { dataSources }, info) => {
       try {
-        const userFeed = 'something';
+        const userFollowing = await dataSources.relationshipAPI.getUserFollowingList(
+          args.id
+        );
+        const userFeed = await dataSources.postAPI.getUserFeed([
+          ...userFollowing,
+          args.id,
+        ]);
+
+        return userFeed;
       } catch (err) {
         console.error(err);
       }

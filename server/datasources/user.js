@@ -11,30 +11,12 @@ class UserAPI extends DataSource {
   }
 
   async getUserData(id) {
-    const user = await this.store.users.findById(id);
-
-    const userPosts = await this.store.posts.findAll({
-      where: {
-        userId: id,
-      },
-    });
-    const postCount = userPosts.length;
-
-    const userFollowers = await this.store.relationships.findAll({
-      where: { followingId: id },
-    });
-    const followersCount = userFollowers.length;
-
-    const userFollowing = await this.store.relationships.findAll({
-      where: { userId: id },
-    });
-    const followingCount = userFollowing.length;
-
-    user.postCount = postCount;
-    user.followersCount = followersCount;
-    user.followingCount = followingCount;
-
-    return user;
+    try {
+      const user = await this.store.users.findById(id);
+      return user;
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   // follow/unfollow user
