@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { updatedHomeFeed } from './index';
 
 const GET_USER_POSTS = 'GET_USER_POSTS';
 const GET_USER_FEED = 'GET_USER_FEED';
@@ -30,6 +31,7 @@ export const getUserFeed = userId => async dispatch => {
         query: `
         query {
           getUserFeed(id: ${userId}) {
+            id
             path
             caption
             userId
@@ -39,24 +41,29 @@ export const getUserFeed = userId => async dispatch => {
       },
     });
 
-    dispatch(gotUserFeed(response.data.data.getUserFeed));
+    const postsArray = response.data.data.getUserFeed;
+
+    const normalizedPosts = {};
+    const postIds = {};
+
+    postsArray.forEach(post => {
+      normalizedPosts[post.id] = post;
+      postIds[post.id] = post.id;
+    });
+
+    dispatch(gotUserFeed(normalizedPosts));
+    dispatch(updatedHomeFeed(postIds));
   } catch (err) {
     console.error(err);
   }
 };
 
-const defaultState = {
-  user: [],
-  following: [],
-};
+const defaultState = {};
 
 export default function(state = defaultState, action) {
   switch (action.type) {
     case GET_USER_FEED:
-      return {
-        ...state,
-        following: action.posts,
-      };
+      return { ...state, ...action.posts };
     case GET_USER_POSTS:
       return;
     default:

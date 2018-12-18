@@ -16,7 +16,7 @@ class Feed extends React.PureComponent {
     await this.props.getUserFeed(this.props.user.id);
   }
   render() {
-    const posts = this.props.posts.following;
+    const { feed, posts } = this.props;
     const uri = `https://s3.us-east-2.amazonaws.com/instaclone-jeru/`;
 
     // if (!this.props.post.following.length) return;
@@ -24,15 +24,15 @@ class Feed extends React.PureComponent {
     return (
       <SafeAreaView>
         <FlatList
-          data={posts}
+          data={Object.keys(feed)}
           renderItem={({ item }) => {
             return (
-              <View key={item.path}>
+              <View>
                 <Image
-                  source={{ uri: `${uri}${item.path}` }}
+                  source={{ uri: `${uri}${posts[item].path}` }}
                   style={{ width: 350, height: 350 }}
                 />
-                <Text>{item.caption}</Text>
+                <Text>{posts[item].caption}</Text>
               </View>
             );
           }}
@@ -45,6 +45,7 @@ class Feed extends React.PureComponent {
 const mapState = state => ({
   user: state.user,
   posts: state.posts,
+  feed: state.feed,
 });
 
 const mapDispatch = dispatch => ({

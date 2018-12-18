@@ -8,13 +8,14 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import user from './user';
 import post from './post';
 import users from './users';
+import feed from './feed';
 
 const persistConfig = {
   key: 'root',
   storage,
 };
 
-const reducer = combineReducers({ user, posts: post, usersById: users });
+const reducer = combineReducers({ user, posts: post, usersById: users, feed });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 
@@ -29,3 +30,4 @@ export const persistor = persistStore(store);
 export default store;
 export * from './user';
 export * from './post';
+export * from './feed';

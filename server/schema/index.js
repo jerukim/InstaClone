@@ -16,6 +16,7 @@ const typeDefs = gql`
   }
 
   type Post {
+    id: Int!
     path: String!
     caption: String
     userId: Int!
