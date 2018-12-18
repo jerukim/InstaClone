@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { Text, SafeAreaView, Button, Image, ScrollView } from 'react-native';
 import { removeUser, fetchUserData } from '../../store';
 
-const amazon = 'https://s3.us-east-2.amazonaws.com/instaclone-jeru';
-
 class UserScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -32,8 +30,6 @@ class UserScreen extends React.Component {
     const uri = `https://s3.us-east-2.amazonaws.com/instaclone-jeru${
       user.profilePhoto
     }`;
-    const prefetch = Image.prefetch(uri);
-    console.log(prefetch);
     return (
       <SafeAreaView>
         <ScrollView>
