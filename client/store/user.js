@@ -32,7 +32,6 @@ export const auth = (
   email,
   name
 ) => async dispatch => {
-  console.log('AUTH THUNK');
   let res;
   try {
     res = await ax.post(`/auth/${method}`, { username, password, email, name });
