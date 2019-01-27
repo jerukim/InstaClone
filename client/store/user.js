@@ -16,7 +16,6 @@ const getUserData = userData => ({ type: GET_USER_DATA, userData });
 export const removeUser = () => ({ type: REMOVE_USER });
 
 export const me = () => async dispatch => {
-  console.log('ME THUNK');
   try {
     const res = await axios.get('/auth/me');
     dispatch(getUser(res.data || defaultUser));
@@ -32,7 +31,6 @@ export const auth = (
   email,
   name
 ) => async dispatch => {
-  console.log('AUTH THUNK');
   let res;
   try {
     res = await ax.post(`/auth/${method}`, { username, password, email, name });
@@ -72,8 +70,8 @@ export const fetchUserData = userId => async dispatch => {
             bio
             website
             postCount
-            followers
-            following
+            followersCount
+            followingCount
           }
         }
           `,
@@ -83,6 +81,11 @@ export const fetchUserData = userId => async dispatch => {
   } catch (err) {
     console.error(err);
   }
+};
+
+const defaultState = {
+  me: Number,
+  byId: {},
 };
 
 export default function(state = defaultUser, action) {
