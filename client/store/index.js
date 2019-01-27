@@ -29,5 +29,6 @@ export const persistor = persistStore(store);
 
 export default store;
 export * from './user';
+export * from './users';
 export * from './post';
 export * from './feed';
