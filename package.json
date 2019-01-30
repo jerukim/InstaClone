@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node server",
+    "start": "node server/index.js",
     "test": "jest",
     "seed": "node script/seed/index.js",
     "start-dev": "NODE_ENV='development' & npm run start-server",
