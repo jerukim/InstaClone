@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start & node server",
+    "start": "node server",
     "test": "jest",
     "seed": "node script/seed/index.js",
     "start-dev": "NODE_ENV='development' & npm run start-server",
