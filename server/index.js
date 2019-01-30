@@ -104,9 +104,7 @@ const startListening = () => {
   server.applyMiddleware({ app });
 
   // const server = ...
-  app.listen(PORT, () =>
-    console.log(`Mixing it up on port ${PORT}${server.graphqlPath}`)
-  );
+  app.listen(PORT, () => console.log(`Mixing it up on port ${PORT}`));
 };
 
 const syncDb = () => db.sync();
