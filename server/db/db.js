@@ -6,7 +6,7 @@ const db = new Sequelize(
   process.env.DATABASE_USERNAME,
   process.env.DATABASE_PASSWORD,
   {
-    host: 'Instaclone-env.cnnhnf83mp.us-east-2.elasticbeanstalk.com',
+    host: process.env.DATABASE_URL,
     port: 5432,
     dialect: 'postgres',
     dialectOptions: {
