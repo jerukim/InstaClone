@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start & node server",
+    "start": "node server/index.js",
     "test": "jest",
     "seed": "node script/seed/index.js",
     "start-dev": "NODE_ENV='development' & npm run start-server",
@@ -14,6 +14,7 @@
     "apollo-datasource": "^0.2.1",
     "apollo-server-express": "^2.2.6",
     "axios": "^0.18.0",
+    "compression": "^1.7.3",
     "connect-session-sequelize": "^6.0.0",
     "express": "^4.16.4",
     "express-graphql": "^0.7.1",
@@ -22,24 +23,12 @@
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "pg": "^7.6.1",
-    "react": "^16.6.3",
-    "react-apollo": "^2.3.2",
-    "react-native": "0.57.4",
-    "react-native-gesture-handler": "^1.0.10",
-    "react-navigation": "^3.0.4",
-    "react-redux": "^5.1.1",
-    "redux": "^4.0.1",
-    "redux-logger": "^3.0.6",
-    "redux-persist": "^5.10.0",
-    "redux-thunk": "^2.3.0",
     "sequelize": "^4.41.2"
   },
   "devDependencies": {
     "babel-jest": "23.6.0",
     "jest": "23.6.0",
-    "metro-react-native-babel-preset": "0.49.0",
-    "react-test-renderer": "16.6.0-alpha.8af6728",
-    "redux-devtools-extension": "^2.13.7"
+    "metro-react-native-babel-preset": "0.49.0"
   },
   "jest": {
     "preset": "react-native"
