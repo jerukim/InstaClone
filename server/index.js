@@ -39,7 +39,7 @@ const createApp = () => {
   app.use(express.urlencoded({ extended: true }));
 
   // compression middleware
-  // app.use(compression());
+  app.use(compression());
 
   // session middleware with passport
   // app.use(
