@@ -3,15 +3,12 @@ const pkg = require('../../package.json');
 
 const db = new Sequelize(
   'instaclone',
-  process.env.DATABASE_USERNAME,
-  process.env.DATABASE_PASSWORD,
+  process.env.RDS_USERNAME,
+  process.env.RDS_PASSWORD,
   {
-    host: process.env.DATABASE_URL,
-    port: 5432,
+    host: process.env.RDS_HOSTNAME,
+    port: process.env.RDS_PORT,
     dialect: 'postgres',
-    dialectOptions: {
-      ssl: 'Amazon RDS',
-    },
   }
 );
 
