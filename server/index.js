@@ -77,6 +77,10 @@ const createApp = () => {
     console.error(err.stack);
     res.status(err.status || 500).send(err.message || 'Internal server error.');
   });
+
+  app.get('/test', (req, res, next) => {
+    res.send('index.html');
+  });
 };
 
 const startListening = () => {
@@ -107,10 +111,10 @@ const startListening = () => {
   app.listen(PORT, () => console.log(`Mixing it up on port ${PORT}`));
 };
 
-const syncDb = () => db.sync();
+// const syncDb = () => db.sync();
 
 async function bootApp() {
-  await syncDb();
+  // await syncDb();
   await createApp();
   await startListening();
 }
