@@ -79,7 +79,7 @@ const createApp = () => {
   });
 
   app.get('/test', (req, res, next) => {
-    res.send('index.html');
+    res.sendFile(path.join(__dirname, '..', 'public/index.html'));
   });
 };
 
