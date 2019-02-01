@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const pkg = require('../../package.json');
 
 const db = new Sequelize(
-  'instaclone',
+  process.env.RDS_DB_NAME,
   process.env.RDS_USERNAME,
   process.env.RDS_PASSWORD,
   {
