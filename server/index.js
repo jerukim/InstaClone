@@ -4,9 +4,9 @@ const morgan = require('morgan');
 const compression = require('compression');
 const session = require('express-session');
 const passport = require('passport');
-const SequelizeStore = require('connect-session-sequelize')(session.Store);
-const db = require('./db');
-const sessionStore = new SequelizeStore({ db });
+// const SequelizeStore = require('connect-session-sequelize')(session.Store);
+// const db = require('./db');
+// const sessionStore = new SequelizeStore({ db });
 const PORT = process.env.PORT || 8080;
 const app = express();
 
@@ -19,16 +19,16 @@ const RelationshipAPI = require('./datasources/relationship');
 
 module.exports = app;
 
-passport.serializeUser((user, done) => done(null, user.id));
+// passport.serializeUser((user, done) => done(null, user.id));
 
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await db.models.user.findById(id);
-    done(null, user);
-  } catch (err) {
-    done(err);
-  }
-});
+// passport.deserializeUser(async (id, done) => {
+//   try {
+//     const user = await db.models.user.findById(id);
+//     done(null, user);
+//   } catch (err) {
+//     done(err);
+//   }
+// });
 
 const createApp = () => {
   // logging middleware
@@ -39,19 +39,19 @@ const createApp = () => {
   app.use(express.urlencoded({ extended: true }));
 
   // compression middleware
-  app.use(compression());
+  // app.use(compression());
 
   // session middleware with passport
-  app.use(
-    session({
-      secret: process.env.SESSION_SECRET || 'secret',
-      store: sessionStore,
-      resave: false,
-      saveUninitialized: false,
-    })
-  );
-  app.use(passport.initialize());
-  app.use(passport.session());
+  // app.use(
+  //   session({
+  //     secret: process.env.SESSION_SECRET || 'secret',
+  //     store: sessionStore,
+  //     resave: false,
+  //     saveUninitialized: false,
+  //   })
+  // );
+  // app.use(passport.initialize());
+  // app.use(passport.session());
 
   // auth and api routes
   app.use('/auth', require('./auth'));
@@ -82,26 +82,26 @@ const createApp = () => {
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
 
-  const apolloStore = () => ({
-    users: models.User,
-    posts: models.Post,
-    comments: models.Comment,
-    likes: models.Like,
-    relationships: models.Relationship,
-    tags: models.Tag,
-  });
+  // const apolloStore = () => ({
+  //   users: models.User,
+  //   posts: models.Post,
+  //   comments: models.Comment,
+  //   likes: models.Like,
+  //   relationships: models.Relationship,
+  //   tags: models.Tag,
+  // });
 
-  const store = apolloStore();
+  // const store = apolloStore();
 
-  const dataSources = () => ({
-    userAPI: new UserAPI({ store }),
-    postAPI: new PostAPI({ store }),
-    relationshipAPI: new RelationshipAPI({ store }),
-  });
+  // const dataSources = () => ({
+  //   userAPI: new UserAPI({ store }),
+  //   postAPI: new PostAPI({ store }),
+  //   relationshipAPI: new RelationshipAPI({ store }),
+  // });
 
-  const server = new ApolloServer({ typeDefs, resolvers, dataSources });
+  // const server = new ApolloServer({ typeDefs, resolvers, dataSources });
 
-  server.applyMiddleware({ app });
+  // server.applyMiddleware({ app });
 
   // const server = ...
   app.listen(PORT, () => console.log(`Mixing it up on port ${PORT}`));
