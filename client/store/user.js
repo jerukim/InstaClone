@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const ax = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: 'Instaclone-env-1.cnnhnf83mp.us-east-2.elasticbeanstalk.com',
 });
 
 const GET_USER = 'GET_USER';
