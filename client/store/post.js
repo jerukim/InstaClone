@@ -1,4 +1,5 @@
 import axios from 'axios';
+import ax, { baseURL } from '../url';
 import { updatedHomeFeed } from './index';
 
 const GET_USER_POSTS = 'GET_USER_POSTS';
@@ -25,7 +26,7 @@ export const getUserPosts = userId => async dispatch => {
 export const getUserFeed = userId => async dispatch => {
   try {
     const response = await axios({
-      url: 'http://localhost:8080/graphql',
+      url: `${baseURL}/graphql`,
       method: 'post',
       data: {
         query: `
