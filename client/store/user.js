@@ -1,8 +1,5 @@
+import ax, { baseURL } from '../url';
 import axios from 'axios';
-
-const ax = axios.create({
-  baseURL: 'Instaclone-env-1.cnnhnf83mp.us-east-2.elasticbeanstalk.com',
-});
 
 const GET_USER = 'GET_USER';
 const GET_USER_DATA = 'GET_USER_DATA';
@@ -17,7 +14,7 @@ export const removeUser = () => ({ type: REMOVE_USER });
 
 export const me = () => async dispatch => {
   try {
-    const res = await axios.get('/auth/me');
+    const res = await ax.get('/auth/me');
     dispatch(getUser(res.data || defaultUser));
   } catch (err) {
     console.error(err);
@@ -47,7 +44,7 @@ export const auth = (
 
 export const logout = () => async dispatch => {
   try {
-    await axios.post('/auth/logout');
+    await ax.post('/auth/logout');
     dispatch(removeUser());
   } catch (err) {
     console.error(err);
@@ -58,7 +55,7 @@ export const logout = () => async dispatch => {
 export const fetchUserData = userId => async dispatch => {
   try {
     const userData = await axios({
-      url: 'http://localhost:8080/graphql',
+      url: `${baseURL}/graphql`,
       method: 'post',
       data: {
         query: `
